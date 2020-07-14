@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+
+all: ${PREFIX}/lib/libopenh264.so
+
+openh264/meson.build:
+	mkdir -p openh264 && cd openh264 && git clone https://github.com/cisco/openh264 .
+
+openh264/build/build.ninja: openh264/meson.build
+	cd openh264 && mkdir -p build && cd build && meson --prefix=$(PREFIX) ..
+
+${PREFIX}/lib/libopenh264.so: openh264/build/build.ninja
+	cd openh264/build && ninja install
+
+.PHONY: all
