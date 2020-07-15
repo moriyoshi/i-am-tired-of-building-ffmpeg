@@ -1,8 +1,10 @@
 #!/usr/bin/make -f
+include _common.mk
+
 SNAPPY_VERSION = 1.1.8
 archive = snappy-$(SNAPPY_VERSION).tar.gz
 
-all: $(PREFIX)/lib/libsnappy.so
+all: $(PREFIX)/lib/libsnappy$(SHARED_LIBRARY_SUFFIX)
 
 $(TMP)/$(archive):
 	curl -L -o $(TMP)/$(archive) "https://github.com/google/snappy/archive/$(SNAPPY_VERSION).tar.gz"
@@ -14,7 +16,7 @@ snappy/snappy-$(SNAPPY_VERSION)/Makefile: snappy/snappy-$(SNAPPY_VERSION)/CMakeL
 	cd snappy/snappy-$(SNAPPY_VERSION) && \
 	cmake -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=$(PREFIX)
 
-$(PREFIX)/lib/libsnappy.so: snappy/snappy-$(SNAPPY_VERSION)/Makefile
+$(PREFIX)/lib/libsnappy$(SHARED_LIBRARY_SUFFIX): snappy/snappy-$(SNAPPY_VERSION)/Makefile
 	make -C snappy/snappy-$(SNAPPY_VERSION) install
 
 .PHONY: all

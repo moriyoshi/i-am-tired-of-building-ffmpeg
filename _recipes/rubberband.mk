@@ -1,23 +1,21 @@
 #!/usr/bin/make -f
+include _common.mk
 
-all: ${PREFIX}/lib/librubberband.so
+all: ${PREFIX}/lib/librubberband$(SHARED_LIBRARY_SUFFIX)
 
-rubberband/Makefile.am:
+rubberband/Makefile.in:
 	mkdir -p rubberband && git clone https://github.com/breakfastquay/rubberband rubberband
 
-rubberband/Makefile: rubberband/Makefile.am
+rubberband/Makefile: rubberband/Makefile.in
 	cd rubberband && \
 	aclocal && \
 	autoconf && \
-	LDFLAGS="-L$(PREFIX)/lib" \
-	CFLAGS="-I$(PREFIX)/include" \
-	CPPFLAGS="-I$(PREFIX)/include" \
-	PKG_CONFIG_PATH="$(PREFIX)/lib/pkgconfig:$${PKG_CONFIG_PATH}" \
-	./configure \
+	sed -i -e 's/-Wl,-Bsymbolic //g; s/-Wl,-soname=[^ ]*//g; s/-Wl,--version-script=[^ ]*//g;' Makefile.in && \
+	$(export_build_env_vars) ./configure \
 		--prefix=$(PREFIX) \
 		--enable-shared
 
-${PREFIX}/lib/librubberband.so: rubberband/Makefile
+${PREFIX}/lib/librubberband$(SHARED_LIBRARY_SUFFIX): rubberband/Makefile
 	make -C rubberband ${MAKE_OPTIONS} install
 
 .PHONY: all

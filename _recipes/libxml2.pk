@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+LIBXML2_VERSION = 2.9.10
+archive = libxml2-$(LIBXML2_VERSION).tar.xz
+
+all: $(PREFIX)/lib/libxml2.so
+
+$(TMP)/$(archive):
+	curl --ftp-pasv -L -o $(TMP)/$(archive) "ftp://xmlsoft.org/libxml2/libxml2-$(LIBXML2_VERSION).tar.gz"
+
+libxml2/libxml2-$(LIBXML2_VERSION)/configure: $(TMP)/$(archive)
+	mkdir -p libxml2 && tar -C libxml2 -xvf $(TMP)/$(archive)
+
+libxml2/libxml2-$(LIBXML2_VERSION)/Makefile: libxml2/libxml2-$(LIBXML2_VERSION)/configure
+	cd libxml2/libxml2-$(LIBXML2_VERSION) && \
+	./configure \
+		--prefix=$(PREFIX) \
+		--enable-shared
+
+$(PREFIX)/lib/libxml2.so: libxml2/libxml2-$(LIBXML2_VERSION)/Makefile
+	make -C libxml2/libxml2-$(LIBXML2_VERSION) install
+
+.PHONY: all

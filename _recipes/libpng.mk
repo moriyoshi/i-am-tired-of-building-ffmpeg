@@ -1,8 +1,10 @@
 #!/usr/bin/make -f
+include _common.mk
+
 LIBPNG_VERSION = 1.6.37
 archive = libpng-$(LIBPNG_VERSION).tar.xz
 
-all: $(PREFIX)/lib/libpng.so
+all: $(PREFIX)/lib/libpng$(SHARED_LIBRARY_SUFFIX)
 
 $(TMP)/$(archive):
 	curl -L -o $(TMP)/$(archive) "http://prdownloads.sourceforge.net/libpng/libpng-$(LIBPNG_VERSION).tar.xz"
@@ -16,7 +18,7 @@ libpng/libpng-$(LIBPNG_VERSION)/Makefile: libpng/libpng-$(LIBPNG_VERSION)/config
 		--prefix=$(PREFIX) \
 		--enable-shared
 
-$(PREFIX)/lib/libpng.so: libpng/libpng-$(LIBPNG_VERSION)/Makefile
+$(PREFIX)/lib/libpng$(SHARED_LIBRARY_SUFFIX): libpng/libpng-$(LIBPNG_VERSION)/Makefile
 	make -C libpng/libpng-$(LIBPNG_VERSION) install
 
 .PHONY: all

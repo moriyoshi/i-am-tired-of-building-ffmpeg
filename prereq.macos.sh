@@ -1,4 +1,11 @@
 #!/bin/sh
-sudo apt install -qy libz-dev libxml2-dev libssl-dev gcc g++ libtool automake autoconf gperf meson nasm yasm
+export _TMP=${PWD}/tmp
+
+_recipes/meson.mk
+_recipes/ninja.mk
+
+export PATH=meson/bin:${PATH}
+export PATH=ninja:${PATH}
+
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y -v
 ${HOME}/.cargo/bin/cargo install cargo-c

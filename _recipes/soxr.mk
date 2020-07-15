@@ -1,8 +1,10 @@
 #!/usr/bin/make -f
+include _common.mk
+
 SOXR_VERSION = 0.1.3
 archive = soxr-$(SOXR_VERSION)-Source.tar.xz
 
-all: $(PREFIX)/lib/libsoxr.so
+all: $(PREFIX)/lib/libsoxr$(SHARED_LIBRARY_SUFFIX)
 
 $(TMP)/$(archive):
 	curl -L -o $(TMP)/$(archive) "http://prdownloads.sourceforge.net/soxr/soxr-$(SOXR_VERSION)-Source.tar.xz"
@@ -14,7 +16,7 @@ soxr/soxr-$(SOXR_VERSION)-Source/Makefile: soxr/soxr-$(SOXR_VERSION)-Source/CMak
 	cd soxr/soxr-$(SOXR_VERSION)-Source && \
 	cmake -DBUILD_SHARED_LIBS=1 -DCMAKE_INSTALL_PREFIX=$(PREFIX)
 
-$(PREFIX)/lib/libsoxr.so: soxr/soxr-$(SOXR_VERSION)-Source/Makefile
+$(PREFIX)/lib/libsoxr$(SHARED_LIBRARY_SUFFIX): soxr/soxr-$(SOXR_VERSION)-Source/Makefile
 	make -C soxr/soxr-$(SOXR_VERSION)-Source install
 
 .PHONY: all

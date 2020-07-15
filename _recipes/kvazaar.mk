@@ -1,22 +1,22 @@
 #!/usr/bin/make -f
+include _common.mk
 
-all: ${PREFIX}/lib/libkvazaar.so
+all: ${PREFIX}/lib/libkvazaar$(SHARED_LIBRARY_SUFFIX)
 
 kvazaar/Makefile.am:
-	mkdir -p kvazaar && git clone https://github.com/ultravideo/kvazaar kvazaar
+	mkdir -p kvazaar
+	cd kvazaar
+	git clone https://github.com/ultravideo/kvazaar .
+	git submodule update --init --depth 1
 
 kvazaar/Makefile: kvazaar/Makefile.am
 	cd kvazaar && \
-	./autogen.sh && \
-	LDFLAGS="-L$(PREFIX)/lib" \
-	CFLAGS="-I$(PREFIX)/include" \
-	CPPFLAGS="-I$(PREFIX)/include" \
-	PKG_CONFIG_PATH="$(PREFIX)/lib/pkgconfig:$${PKG_CONFIG_PATH}" \
-	./configure \
+	$(autogen_sh) && \
+	$(export_build_env_vars) ./configure \
 		--prefix=$(PREFIX) \
 		--enable-shared
 
-${PREFIX}/lib/libkvazaar.so: kvazaar/Makefile
+${PREFIX}/lib/libkvazaar$(SHARED_LIBRARY_SUFFIX): kvazaar/Makefile
 	make -C kvazaar ${MAKE_OPTIONS} install
 
 .PHONY: all

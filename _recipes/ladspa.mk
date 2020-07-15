@@ -1,4 +1,5 @@
 #!/usr/bin/make -f
+include _common.mk
 
 all: $(PREFIX)/include/ladspa.h
 

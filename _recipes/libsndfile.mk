@@ -1,8 +1,10 @@
 #!/usr/bin/make -f
+include _common.mk
+
 LIBSNDFILE_VERSION = 1.0.28
 archive = libsndfile-$(LIBSNDFILE_VERSION).tar.lzma
 
-all: $(PREFIX)/lib/libsndfile.so
+all: $(PREFIX)/lib/libsndfile$(SHARED_LIBRARY_SUFFIX)
 
 $(TMP)/$(archive):
 	curl -L -o $(TMP)/$(archive) "http://www.mega-nerd.com/libsndfile/files/libsndfile-$(LIBSNDFILE_VERSION).tar.gz"
@@ -12,15 +14,11 @@ libsndfile/libsndfile-$(LIBSNDFILE_VERSION)/configure: $(TMP)/$(archive)
 
 libsndfile/libsndfile-$(LIBSNDFILE_VERSION)/Makefile: libsndfile/libsndfile-$(LIBSNDFILE_VERSION)/configure
 	cd libsndfile/libsndfile-$(LIBSNDFILE_VERSION) && \
-	LDFLAGS="-L$(PREFIX)/lib" \
-	CFLAGS="-I$(PREFIX)/include" \
-	CPPFLAGS="-I$(PREFIX)/include" \
-	PKG_CONFIG_PATH="$(PREFIX)/lib/pkgconfig:$${PKG_CONFIG_PATH}" \
-	./configure \
+	$(export_build_env_vars) ./configure \
 		--prefix=$(PREFIX) \
 		--enable-shared
 
-$(PREFIX)/lib/libsndfile.so: libsndfile/libsndfile-$(LIBSNDFILE_VERSION)/Makefile
+$(PREFIX)/lib/libsndfile$(SHARED_LIBRARY_SUFFIX): libsndfile/libsndfile-$(LIBSNDFILE_VERSION)/Makefile
 	make -C libsndfile/libsndfile-$(LIBSNDFILE_VERSION) install
 
 .PHONY: all

@@ -3,6 +3,8 @@ set -xe
 export TMP=${PWD}/_tmp
 export PREFIX="${HOME}/opt/ffmpeg"
 
+# _recipes/openssl.mk
+
 _recipes/fftw3.mk
 _recipes/libsndfile.mk
 

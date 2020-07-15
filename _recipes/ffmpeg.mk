@@ -1,4 +1,5 @@
 #!/usr/bin/make -f
+include _common.mk
 
 all: $(PREFIX)/bin/ffmpeg
 
@@ -9,12 +10,7 @@ ffmpeg/ffbuild/config.sh: ffmpeg/configure
 	#  NOTE: license for aribb24 was changed to LGPLv3 and OpenCore AMRs are under Apache License v2. (ffmpeg tells wrong warnings)
 	#  --enable-nonfree is for fdk-aac, the license incompatibility would prevent us from redistribution of the binaries
 	cd ffmpeg && \
-	LD_LIBRARY_PATH="$(PREFIX)/lib" \
-	LDFLAGS="-L$(PREFIX)/lib" \
-	CFLAGS="-I$(PREFIX)/include" \
-	CPPFLAGS="-I$(PREFIX)/include" \
-	PKG_CONFIG_PATH="$(PREFIX)/lib/pkgconfig:$${PKG_CONFIG_PATH}" \
-	./configure \
+	$(export_build_env_vars) ./configure \
 		--prefix=$(PREFIX) \
 		--enable-gpl \
 		--enable-version3 \

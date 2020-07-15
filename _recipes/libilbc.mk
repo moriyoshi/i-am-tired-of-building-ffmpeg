@@ -1,19 +1,20 @@
 #!/usr/bin/make -f
+include _common.mk
 
-all: ${PREFIX}/lib/libilbc.so
+all: ${PREFIX}/lib/libilbc$(SHARED_LIBRARY_SUFFIX)
 
 libilbc/CMakeLists.txt:
 	mkdir -p libilbc && git clone https://github.com/TimothyGu/libilbc libilbc
 
 libilbc/Makefile: libilbc/CMakeLists.txt
 	cd libilbc && \
-	LDFLAGS="-L$(PREFIX)/lib" \
-	CFLAGS="-I$(PREFIX)/include" \
-	CPPFLAGS="-I$(PREFIX)/include" \
-	PKG_CONFIG_PATH="$(PREFIX)/lib/pkgconfig:$${PKG_CONFIG_PATH}" \
-	cmake -DCMAKE_INSTALL_PREFIX="$(PREFIX)"
+	$(export_build_env_vars) cmake -DCMAKE_INSTALL_PREFIX="$(PREFIX)"
 
-$(PREFIX)/lib/libilbc.so: libilbc/Makefile
+$(PREFIX)/lib/libilbc$(SHARED_LIBRARY_SUFFIX): libilbc/Makefile
 	make -C libilbc $(MAKE_OPTIONS) install
+	if [ -e "$(PREFIX)/lib64" ]; then \
+		cp -R "$(PREFIX)/lib64/"* "$(PREFIX)/lib"; \
+		rm -rf "$(PREFIX)/lib64"; \
+	fi
 
 .PHONY: all
