@@ -13,7 +13,7 @@ endif
 autogen_sh = \
 	$(libtoolize) -c -f -i && \
 	aclocal -I m4 && \
-	autoheader \
+	autoheader && \
 	automake -c -a -i && \
 	autoconf
 

@@ -8,7 +8,7 @@ aribb24/Makefile.am:
 
 aribb24/Makefile: aribb24/Makefile.am
 	cd aribb24 && \
-	$(autogen_sh) \
+	$(autogen_sh) && \
 	$(export_build_env_vars) ./configure \
 		--prefix=$(PREFIX) \
 		--enable-shared

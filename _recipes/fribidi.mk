@@ -14,7 +14,7 @@ fribidi/fribidi-$(FRIBIDI_VERSION)/configure: $(TMP)/$(archive)
 
 fribidi/fribidi-$(FRIBIDI_VERSION)/Makefile: fribidi/fribidi-$(FRIBIDI_VERSION)/configure
 	cd fribidi/fribidi-$(FRIBIDI_VERSION) && \
-	$(autogen_sh) \
+	$(autogen_sh) && \
 	$(export_build_env_vars) ./configure \
 		--prefix=$(PREFIX) \
 		--enable-shared
