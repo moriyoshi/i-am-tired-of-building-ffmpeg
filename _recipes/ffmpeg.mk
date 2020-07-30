@@ -12,6 +12,7 @@ ffmpeg/ffbuild/config.sh: ffmpeg/configure
 	cd ffmpeg && \
 	$(export_build_env_vars) ./configure \
 		--prefix=$(PREFIX) \
+		--enable-ffplay \
 		--enable-gpl \
 		--enable-version3 \
 		--enable-nonfree \
