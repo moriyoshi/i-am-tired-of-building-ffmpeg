@@ -14,7 +14,7 @@ openssl/openssl-$(OPENSSL_VERSION)/Configure: $(TMP)/$(archive)
 
 openssl/openssl-$(OPENSSL_VERSION)/Configurations: openssl/openssl-$(OPENSSL_VERSION)/Configure
 	cd openssl/openssl-$(OPENSSL_VERSION) && \
-	./Configure shared threads --prefix="$(PREFIX)" cc
+	./config shared threads --prefix="$(PREFIX)"
 
 $(PREFIX)/lib/libssl$(SHARED_LIBRARY_SUFFIX): openssl/openssl-$(OPENSSL_VERSION)/Configurations
 	make -C openssl/openssl-$(OPENSSL_VERSION) $(MAKE_OPTIONS) install
