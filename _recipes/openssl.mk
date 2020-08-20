@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 include _common.mk
 
-OPENSSL_VERSION = 1.1.0g
+OPENSSL_VERSION = 1.1.1g
 archive = openssl-$(OPENSSL_VERSION).tar.gz
 
 all: $(PREFIX)/lib/libssl$(SHARED_LIBRARY_SUFFIX)
