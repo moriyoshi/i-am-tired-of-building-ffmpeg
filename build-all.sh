@@ -1,9 +1,9 @@
 #!/bin/sh
 set -xe
-export TMP=${PWD}/_tmp
-export PREFIX="${HOME}/opt/ffmpeg"
+export TMP=${TMP:=${PWD}/_tmp}
+export PREFIX=${PREFIX:-/opt/ffmpeg}
 
-# _recipes/openssl.mk
+_recipes/openssl.mk
 
 _recipes/fftw3.mk
 _recipes/libsndfile.mk
