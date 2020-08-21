@@ -8,7 +8,7 @@ fdk-aac/Makefile.am:
 
 fdk-aac/Makefile: fdk-aac/Makefile.am
 	cd fdk-aac && \
-	$(autogen_sh) && \
+	$(autogen_without_autoheader_sh) && \
 	$(export_build_env_vars) ./configure \
 		--prefix=$(PREFIX) \
 		--enable-shared

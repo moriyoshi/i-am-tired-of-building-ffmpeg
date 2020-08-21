@@ -9,6 +9,4 @@ meson/bin/pip:
 	$(PYTHON3) -m venv meson
 
 meson/bin/meson: meson/bin/pip
-	meson/bin/pip" install meson
-
-
+	"meson/bin/pip" install meson

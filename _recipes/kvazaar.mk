@@ -4,9 +4,9 @@ include _common.mk
 all: ${PREFIX}/lib/libkvazaar$(SHARED_LIBRARY_SUFFIX)
 
 kvazaar/Makefile.am:
-	mkdir -p kvazaar
-	cd kvazaar
-	git clone https://github.com/ultravideo/kvazaar .
+	mkdir -p kvazaar && \
+	cd kvazaar && \
+	git clone https://github.com/ultravideo/kvazaar . && \
 	git submodule update --init --depth 1
 
 kvazaar/Makefile: kvazaar/Makefile.am

@@ -8,7 +8,7 @@ libklvanc/Makefile.am:
 
 libklvanc/Makefile: libklvanc/Makefile.am
 	cd libklvanc && \
-	$(autogen_sh) && \
+	$(autogen_without_autoheader_sh) && \
 	$(export_build_env_vars) ./configure \
 		--prefix=$(PREFIX) \
 		--enable-shared

@@ -12,4 +12,4 @@ ninja/ninja-$(NINJA_VERSION)/configure.py:
 	mkdir -p ninja && tar -C ninja -xvf "$(TMP)/$(archive)"
 
 ninja/ninja-$(NINJA_VERSION)/ninja: ninja/ninja-$(NINJA_VERSION)/configure.py
-	$(PYTHON3) ninja/ninja-$(NINJA_VERSION)/configure.py --bootstrap
+	cd ninja && $(PYTHON3) ninja-$(NINJA_VERSION)/configure.py --bootstrap

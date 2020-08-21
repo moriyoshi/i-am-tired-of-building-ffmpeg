@@ -11,5 +11,9 @@ openh264/build/build.ninja: openh264/meson.build
 
 ${PREFIX}/lib/libopenh264$(SHARED_LIBRARY_SUFFIX): openh264/build/build.ninja
 	cd openh264/build && ninja install
+	if [ -e "$(PREFIX)/lib64" ]; then \
+		cp -R "$(PREFIX)/lib64/"* "$(PREFIX)/lib"; \
+		rm -rf "$(PREFIX)/lib64"; \
+	fi
 
 .PHONY: all

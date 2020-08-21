@@ -19,6 +19,6 @@ ogg/libogg-$(OGG_VERSION)/Makefile: ogg/libogg-$(OGG_VERSION)/configure
 		--enable-shared
 
 $(PREFIX)/lib/libogg$(SHARED_LIBRARY_SUFFIX): ogg/libogg-$(OGG_VERSION)/Makefile
-	make -C ogg/libogg-$(OGG_VERSION) install
+	make -C ogg/libogg-$(OGG_VERSION) $(MAKE_OPTIONS) install
 
 .PHONY: all

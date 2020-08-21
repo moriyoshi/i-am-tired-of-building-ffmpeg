@@ -17,6 +17,12 @@ autogen_sh = \
 	automake -c -a -i && \
 	autoconf
 
+autogen_without_autoheader_sh = \
+	$(libtoolize) -c -f -i && \
+	aclocal -I m4 && \
+	automake -c -a -i && \
+	autoconf
+
 export_build_env_vars = \
 	LDFLAGS="-L$(PREFIX)/lib" \
 	CFLAGS="-I$(PREFIX)/include" \

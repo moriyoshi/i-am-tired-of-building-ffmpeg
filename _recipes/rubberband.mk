@@ -16,6 +16,6 @@ rubberband/Makefile: rubberband/Makefile.in
 		--enable-shared
 
 ${PREFIX}/lib/librubberband$(SHARED_LIBRARY_SUFFIX): rubberband/Makefile
-	make -C rubberband ${MAKE_OPTIONS} install
+	make -C rubberband LDFLAGS="-Wl,-rpath,$(PREFIX)/lib -L$(PREFIX)/lib -lpthread" ${MAKE_OPTIONS} install
 
 .PHONY: all
